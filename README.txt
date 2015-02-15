@@ -31,8 +31,6 @@
  * userChrome.import("Full file folder path");
  * userChrome.import("Relative file folder path/name", "Token");
  * userChrome.import("*", "Token");
- * // Console logger
- * userChrome.log("My message", "Optional calling script name arg");
  * 
  * NOTE: absolute windows files and folders must be have backslash escaped:
  * "C:\\Program Files\\Mozilla\\scripts\\myscript.js"
@@ -69,6 +67,12 @@
  * NOTE: the date format for the userChrome.log console logger may be user defined:
  * Example:
  * userChrome.dateFormat = "%Y-%m-%d %H:%M:%S";
+ * 
+ * NOTE: the default charSet is "UTF-8"; for code using the 'import' or
+ *       'importFolder' functions to manage files, the charSet for subscript loader
+ *       may be user defined, prior to calling the import or importFolder functions:
+ * Example:
+ * userChrome.charSet = "UTF-8";
  * 
  * NOTE: the following shortcuts are predefined:
  * Cc = Components.classes;
