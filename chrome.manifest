@@ -1,0 +1,6 @@
+content   userchromejs        content/
+locale    userchromejs en-US  locale/en-US/
+
+component {8DEB3B5E-7585-4029-B6D0-4733CE8DED50} components/userChrome_js.js  appversion>=4.0b2pre
+contract  @userChromeJS;1 {8DEB3B5E-7585-4029-B6D0-4733CE8DED50}              appversion>=4.0b2pre
+category  profile-after-change @userChromeJS;1 @userChromeJS;1                appversion>=4.0b2pre
