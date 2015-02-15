@@ -36,10 +36,14 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-const Cc = Components.classes;
-const Ci = Components.interfaces;
-const Cr = Components.results;
-const Cu = Components.utils;
+if (Cc == undefined)
+  var Cc = Components.classes;
+if (Ci == undefined)
+  var Ci = Components.interfaces;
+if (Cr == undefined)
+  var Cr = Components.results;
+if (Cu == undefined)
+  var Cu = Components.utils;
 
 Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 
@@ -54,7 +58,7 @@ if (!("defineLazyServiceGetter" in XPCOMUtils)) {
     };
 }
 
-function UserChrome_js() {}
+function UserChrome_js() {};
 
 UserChrome_js.prototype = {
   // Properties required for XPCOM registration:
@@ -130,9 +134,12 @@ UserChrome_js.prototype = {
                      getService(Ci.mozIJSSubScriptLoader);
 
         loader.loadSubScript("chrome://userChromeJS/content/userChromeJS.js",
-            document.defaultView);
+                             document.defaultView,
+                             "UTF-8");
 
-        loader.loadSubScript(this.mFileURL, document.defaultView);
+        loader.loadSubScript(this.mFileURL,
+                             document.defaultView,
+                             "UTF-8");
       }
       catch (ex) {
         // script execution can be stopped with |throw "stop";|
