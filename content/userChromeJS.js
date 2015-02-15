@@ -16,7 +16,7 @@
  * The Initial Developer of the Original Code is
  * alta88 <alta88@gmail.com>
  *
- * Portions created by the Initial Developer are Copyright (C) 2008
+ * Portions created by the Initial Developer are Copyright (C) 2014
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
@@ -35,17 +35,18 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-/* ........ Utility functions ............................................... */
+var EXPORTED_SYMBOLS = ["userChrome"];
 
-if (typeof Cc == "undefined")
-//  (function() {Cc = Components.classes;} )();
-  eval("var Cc = Components.classes");
-if (typeof Ci == "undefined")
-  eval("var Ci = Components.interfaces");
-if (typeof Cr == "undefined")
-  eval("var Cr = Components.results");
-if (typeof Cu == "undefined")
-  eval("var Cu = Components.utils");
+if (Cc == undefined)
+  var Cc = Components.classes;
+if (Ci == undefined)
+  var Ci = Components.interfaces;
+if (Cr == undefined)
+  var Cr = Components.results;
+if (Cu == undefined)
+  var Cu = Components.utils;
+
+/* ........ Utility functions ............................................... */
 
 var userChrome = {
   path: null,
@@ -103,24 +104,26 @@ var userChrome = {
       }
       else
         this.log("File '" + this.path +
-                 "' does not have a valid .js or .xul extension.", "import");
+                 "' does not have a valid .js or .xul extension.", "userChrome.import");
     }
     else if (file.isDirectory())
       this.importFolder(file);
     else
       this.log("File '" + this.path +
-               "' is neither a file nor a directory.", "import");
+               "' is neither a file nor a directory.", "userChrome.import");
   },
 
   loadScript: function(aFile, aFolder, aRelDirToken) {
     setTimeout(function() {
       Cc["@mozilla.org/moz/jssubscript-loader;1"].
       getService(Ci.mozIJSSubScriptLoader).
-      loadSubScript(userChrome.getURLSpecFromFile(aFile), null);
+      loadSubScript(userChrome.getURLSpecFromFile(aFile),
+                    null, // defaults to the global object of the caller.
+                    userChrome.charSet);
       // log it
       userChrome.log(aRelDirToken ? ("[" + aRelDirToken + "]/" +
           (aFolder && aFolder != "*" ? aFolder + "/" : "") + aFile.leafName) :
-          aFile.path, "loadScript");
+          aFile.path, "userChrome.loadScript");
     }, 0);
   },
 
@@ -131,16 +134,16 @@ var userChrome = {
   // needs to consider overlay completions and logging does not strictly mean
   // an overlay has completed, rather that the overlay file has been invoked.
   loadOverlay: function(aFiles, aRelDirToken, aFolder, aDelay) {
-//userChrome.log(aDelay, "multiple import delay");
+//userChrome.log(aDelay+" multiple import delay", userChrome.loadOverlay);
     // Increment multiple import delay
     this.loadOverlayDelay = this.loadOverlayDelay + this.loadOverlayDelayIncr;
     setTimeout(function() {
       if (aFiles.length > 0) {
-//userChrome.log(userChrome.loadOverlayDelay, "inter folder delay");
+//userChrome.log(userChrome.loadOverlayDelay+" inter folder delay", userChrome.loadOverlay);
         // log it
         userChrome.log(aRelDirToken ? ("[" + aRelDirToken + "]/" +
             (aFolder && aFolder != "*" ? aFolder + "/" : "") + aFiles[0].leafName) :
-            aFiles[0].path, "loadOverlay");
+            aFiles[0].path, "userChrome.loadOverlay");
         document.loadOverlay(userChrome.getURLSpecFromFile(aFiles.shift()), null);
         setTimeout(arguments.callee, userChrome.loadOverlayDelay);
       }
@@ -175,13 +178,13 @@ var userChrome = {
           return file;
         this.log("Invalid file '" + this.path + (this.dirToken ?
             ("' or file not found in directory with token '" + this.dirToken) :
-            "") + "' or other access error.", "getFile");
+            "") + "' or other access error.", "userChrome.getFile");
       }
       catch (e) {
         // Bad folder throws on initWithPath
         this.log("Invalid folder '" + this.path + (this.dirToken ?
             ("' or folder not found in directory with token '" + this.dirToken) :
-            "") + "' or other access error.", "getFile");
+            "") + "' or other access error.", "userChrome.getFile");
       }
 
     return null;
@@ -196,7 +199,7 @@ var userChrome = {
     }
     catch (e) {
       this.log("Invalid directory name token '" + this.dirToken +
-               "' or directory cannot be accessed.", "getAbsoluteFile");
+               "' or directory cannot be accessed.", "userChrome.getAbsoluteFile");
       return null;
     }
   },
@@ -211,7 +214,7 @@ var userChrome = {
   log: function(aMsg, aCaller) {
     Cc["@mozilla.org/consoleservice;1"].
     getService(Ci.nsIConsoleService).
-    logStringMessage(this.date + " userChromeJS.js::" +
+    logStringMessage(this.date + " userChromeJS " +
         (aCaller ? aCaller +": " : "") + aMsg);
   },
 
@@ -228,6 +231,16 @@ var userChrome = {
   get date() {
     let date = new Date();
     return date.toLocaleFormat(this.dateFormat);
+  },
+
+  set charSet(val) {
+    this._charSet = val;
+  },
+
+  get charSet() {
+    if (!this._charSet)
+      this._charSet = "UTF-8"; // use "UTF-8". defaults to ascii if null.
+    return this._charSet;
   }
 
 };
