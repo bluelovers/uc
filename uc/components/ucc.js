@@ -1,13 +1,13 @@
-'use strict'
+'use strict';
 
-const Cu = Components.utils
-Cu.import('resource://gre/modules/XPCOMUtils.jsm')
-Cu.import('resource://gre/modules/Services.jsm')
+const Cu = Components.utils;
+Cu.import('resource://gre/modules/XPCOMUtils.jsm');
+Cu.import('resource://gre/modules/Services.jsm');
 
 function UCC()
 {
-	Cu.import('resource://uc/uc.jsm')
-	Services.obs.addObserver(this, 'domwindowopened', false)
+	Cu.import('resource://uc/uc.jsm');
+	Services.obs.addObserver(this, 'domwindowopened', false);
 }
 UCC.prototype = {
 	classDescription: 'uc boot',
@@ -22,7 +22,7 @@ UCC.prototype = {
 	win && win.addEventListener('load', this, true),
 	handleEvent: function UCC_onDocumentLoad(ev)
 	{
-		UC.init(ev.target.defaultView)
+		UC.init(ev.target.defaultView);
 	},
-}
-var NSGetFactory = XPCOMUtils.generateNSGetFactory([UCC])
+};
+var NSGetFactory = XPCOMUtils.generateNSGetFactory([UCC]);
