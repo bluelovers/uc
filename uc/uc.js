@@ -4,12 +4,11 @@
 	interfaces: Ci,
 	utils: Cu,
 	results: Cr
-}) = Components
+}) = Components;
 
-;
 (UC = {
 	__proto__: Cu.import('resource://uc/uc.jsm', null).UC
-}).load(self)
+}).load(self);
 
 UC.pget('extensions.uc.subwindows') &&
 	document.documentElement.addEventListener(
@@ -17,7 +16,7 @@ UC.pget('extensions.uc.subwindows') &&
 		function UC_onContentLoad(ev)
 		{
 			UC.init(ev.target)
-		}, true)
+		}, true);
 
 if (location.href === UC.URL_MAIN)
 {
@@ -29,5 +28,5 @@ if (location.href === UC.URL_MAIN)
 		oncommand: 'UC.options()',
 		class: 'menuitem-iconic',
 		image: 'resource://uc/chrome/icons/default/uc.ico',
-	}))
+	}));
 }
