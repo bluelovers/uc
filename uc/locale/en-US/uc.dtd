@@ -1,0 +1,11 @@
+<!ENTITY uc.add.directory "+Directory">
+<!ENTITY uc.add.files "+Files">
+<!ENTITY uc.close "Close">
+<!ENTITY uc.copy "Copy">
+<!ENTITY uc.copy.paths "Copy Paths">
+<!ENTITY uc.depth "Depth">
+<!ENTITY uc.paste "Paste">
+<!ENTITY uc.paste.all "Paste All">
+<!ENTITY uc.paste.paths "Paste Paths">
+<!ENTITY uc.path "Path">
+<!ENTITY uc.remove "Remove">
