@@ -5,6 +5,7 @@ var EXPORTED_SYMBOLS = ['console'];
 {
 	var o = Components.utils.import("resource://gre/modules/devtools/Console.jsm");
 
+	// https://developer.mozilla.org/en-US/docs/Web/API/console
 	context.console = new o.ConsoleAPI();
 
 	context.console.options = {
