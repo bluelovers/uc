@@ -1,26 +1,26 @@
 
 var EXPORTED_SYMBOLS = ['console'];
 
-(function(context)
+(function(contextSelf)
 {
 	var o = Components.utils.import("resource://gre/modules/devtools/Console.jsm");
 
 	// https://developer.mozilla.org/en-US/docs/Web/API/console
-	context.console = new o.ConsoleAPI();
+	let console = new o.ConsoleAPI();
 
-	context.console.options = {
+	console.options = {
 		mode: false,
 	};
 
 	// for Scratchpad or console
-	context.console.logPrint = function (e)
+	console.logPrint = function (e)
 	{
 		var args = this.unwrapArgs(arguments);
 
 		return o.log((args.length == 1) ? args[0] : Array.prototype.slice.call(args, 0));
 	};
 
-	context.console.unwrapArgs = function (args)
+	console.unwrapArgs = function (args)
 	{
 		while (args.length == 1 && typeof args[0].callee !== 'undefined')
 		{
@@ -30,7 +30,7 @@ var EXPORTED_SYMBOLS = ['console'];
 		return args;
 	};
 
-	context.console.assert = function (assertion, e)
+	console.assert = function (assertion, e)
 	{
 		if (assertion)
 		{
@@ -52,7 +52,7 @@ var EXPORTED_SYMBOLS = ['console'];
 		}
 
 		(function(_method){
-			context.console[method] = function (e)
+			console[method] = function (e)
 			{
 				var args = this.unwrapArgs(arguments);
 
@@ -66,7 +66,9 @@ var EXPORTED_SYMBOLS = ['console'];
 					return this.logPrint(args);
 				}
 			};
-		})(context.console['_' + method] = o.ConsoleAPI.prototype[method]);
+		})(console['_' + method] = o.ConsoleAPI.prototype[method]);
 	}
+
+	contextSelf.console = console;
 
 })(this);
