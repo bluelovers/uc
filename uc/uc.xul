@@ -1,11 +1,11 @@
 <?xml-stylesheet href="chrome://global/skin/" ?>
-	<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" id="uc" title="uc" width="400" height="200" persist="width,height,screenX,screenY" buttons="extra2,accept,cancel" buttonlabelextra2="Remove" buttonaccesskeyextra2="R" ondialogextra2="remove()" ondialogaccept="save()">
+	<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" id="uc" title="uc" width="400" height="200" persist="width,height,screenX,screenY" buttons="extra2,accept,cancel" buttonlabelextra2="&uc.remove;" buttonaccesskeyextra2="R" ondialogextra2="remove()" ondialogaccept="save()">
 		<script src="uco.js" type="application/javascript;version=1.8" />
 		<tree id="paths" flex="1" editable="true" seltype="single" hidecolumnpicker="true" onkeydown="keydown(event)">
 			<treecols style="font-family:monospace">
-				<treecol id="path" label="*.uc.{js,xul,css}  */" tooltiptext="Path" flex="1" crop="center" editable="true" sortActive="true" sortDirection="ascending" persist="width,sortDirection,sortActive" />
+				<treecol id="path" label="*.uc.{js,xul,css}  */" tooltiptext="&uc.path;" flex="1" crop="center" editable="true" sortActive="true" sortDirection="ascending" persist="width,sortDirection,sortActive" />
 				<splitter class="tree-splitter" />
-				<treecol id="depth" label="&#x21A7;" tooltiptext="Depth" editable="true" sortActive="true" persist="width,sortDirection,sortActive" />
+				<treecol id="depth" label="&#x21A7;" tooltiptext="&uc.depth;" editable="true" sortActive="true" persist="width,sortDirection,sortActive" />
 			</treecols>
 			<treechildren id="children" alternatingbackground="true" ondragenter="return drag(hush(event))" ondragover="return drag(hush(event))" ondrop="drop(hush(event))" ondblclick="dblclick(event)" context="copy-paste" />
 		</tree>
@@ -20,22 +20,22 @@
 				<h:b>0</h:b> to
 				<h:b>9</h:b>
 			</description>
-			<button label="+Files" accesskey="F" oncommand="pick('OpenMultiple')" />
-			<button label="+Directory" accesskey="D" oncommand="pick('GetFolder')" />
+			<button label="&uc.add.files;" accesskey="F" oncommand="pick('OpenMultiple')" />
+			<button label="&uc.add.directory;" accesskey="D" oncommand="pick('GetFolder')" />
 		</hbox>
 		<popupset id="mainPopupSet">
 			<menupopup id="copy-paste">
-				<menuitem id="copy" oncommand="copy()" label="Copy" accesskey="C" />
-				<menuitem id="paste" oncommand="paste()" label="Paste" accesskey="P" />
-				<menuitem id="copy-all" oncommand="copy(1)" label="Copy Paths" accesskey="o" />
-				<menuitem id="paste-all" oncommand="paste(1)" label="Paste Paths" accesskey="a" />
+				<menuitem id="copy" oncommand="copy()" label="&uc.copy;" accesskey="C" />
+				<menuitem id="paste" oncommand="paste()" label="&uc.paste;" accesskey="P" />
+				<menuitem id="copy-all" oncommand="copy(1)" label="&uc.copy.paths;" accesskey="o" />
+				<menuitem id="paste-all" oncommand="paste(1)" label="&uc.paste.paths;" accesskey="a" />
 			</menupopup>
 		</popupset>
 		<keyset id="mainKeySet">
-			<key id="key-copy" label="copy" modifiers="accel" key="c" oncommand="copy()" />
-			<key id="key-copy-all" label="copy paths" modifiers="accel,shift" key="c" oncommand="copy(1)" />
-			<key id="key-paste" label="paste" modifiers="accel" key="v" oncommand="paste()" />
-			<key id="key-paste-all" label="paste all" modifiers="accel,shift" key="v" oncommand="paste(1)" />
-			<key id="key-close" label="close" modifiers="accel" key="w" oncommand="close()" />
+			<key id="key-copy" label="&uc.copy;" modifiers="accel" key="c" oncommand="copy()" />
+			<key id="key-copy-all" label="&uc.copy.paths;" modifiers="accel,shift" key="c" oncommand="copy(1)" />
+			<key id="key-paste" label="&uc.paste;" modifiers="accel" key="v" oncommand="paste()" />
+			<key id="key-paste-all" label="&uc.paste.all;" modifiers="accel,shift" key="v" oncommand="paste(1)" />
+			<key id="key-close" label="&uc.close;" modifiers="accel" key="w" oncommand="close()" />
 		</keyset>
 	</dialog>
